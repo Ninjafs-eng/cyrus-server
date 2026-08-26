@@ -1,289 +1,358 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYRUS' SERVER | Ultimate Video Editing Community</title>
-    
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="CYRUS' SERVER">
-    <meta name="description" content="A simple editing community for video creators. Learn, share, and grow. All skill levels welcome!">
+    <title>Cyrus' Server | Editing Hub</title>
 
-    <!-- Open Graph / Discord Preview -->
+    <!-- Open Graph / Discord Preview (Enhanced) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cyrus.projectdev.net/">
-    <meta property="og:site_name" content="CYRUS' SERVER">
-    <meta property="og:title" content="CYRUS' SERVER">
-    <meta property="og:description" content="A simple editing community for video creators. Learn, share, and grow. All skill levels welcome!">
+    <meta property="og:site_name" content="Cyrus' Server">
+    <meta property="og:title" content="Rare Editing Sanctuary">
+    <meta property="og:description" content="A high-end, low-key underground hub for creators. Explore curated project file forums, rare asset vaults, and a noise-free editing community.">
     <meta property="og:image" content="https://i.ibb.co/p663KL4T/e300ba5a-01bf-4beb-a6f1-47fe042bc720.jpg">
+    <meta name="theme-color" content="#050505">
 
-    <!-- Twitter Preview (used by Discord for large banner view) -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cyrus.projectdev.net/">
-    <meta property="twitter:title" content="CYRUS' SERVER">
-    <meta property="twitter:description" content="A simple editing community for video creators. Learn, share, and grow. All skill levels welcome!">
-    <meta property="twitter:image" content="https://i.ibb.co/p663KL4T/e300ba5a-01bf-4beb-a6f1-47fe042bc720.jpg">
-
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
-                    },
                     colors: {
-                        brand: {
-                            bg: '#0B0B0E',
-                            card: '#13131A',
-                            border: '#232330',
-                            purple: '#8B5CF6',
-                            purpleGlow: '#7C3AED',
-                            cyan: '#06B6D4',
-                            discord: '#5865F2'
+                        darkbg: '#050505',
+                        cardbg: '#0f0f0f',
+                        bordercol: '#222222'
+                    },
+                    keyframes: {
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translate(0px, 0px) rotate(0deg)' },
+                            '50%': { transform: 'translate(-30px, -40px) rotate(180deg)' },
+                        },
+                        floatFast: {
+                            '0%, 100%': { transform: 'translate(0px, 0px) rotate(0deg)' },
+                            '50%': { transform: 'translate(40px, 30px) rotate(-180deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.2', transform: 'scale(1)' },
+                            '50%': { opacity: '0.5', transform: 'scale(1.15)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
                         }
                     },
-                    boxShadow: {
-                        'glow-purple': '0 0 25px -5px rgba(139, 92, 246, 0.5)',
-                        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.4)',
-                        'glow-discord': '0 0 30px -5px rgba(88, 101, 242, 0.6)',
+                    animation: {
+                        'float-slow': 'floatSlow 14s ease-in-out infinite',
+                        'float-fast': 'floatFast 9s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
+                        'marquee': 'marquee 25s linear infinite',
                     }
                 }
             }
         }
     </script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body {
-            background-color: #0B0B0E;
-            color: #E2E8F0;
+            background-color: #050505;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #A78BFA 0%, #06B6D4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        html {
+            scroll-behavior: smooth;
         }
-        .gradient-border {
+        #cursor-glow {
+            pointer-events: none;
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            z-index: 1;
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(18, 18, 18, 0.8), rgba(8, 8, 8, 0.95));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.08);
+        }
+        .glow-button {
             position: relative;
-            background: #13131A;
-            border-radius: 1rem;
+            transition: all 0.3s ease;
         }
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(135deg, rgba(139,92,246,0.4), rgba(6,182,212,0.1), rgba(255,255,255,0.05));
-            border-radius: 1.05rem;
-            z-index: -1;
-            transition: opacity 0.3s ease;
+        .glow-button:hover {
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
+            transform: translateY(-3px);
         }
-        .gradient-border:hover::before {
-            background: linear-gradient(135deg, rgba(139,92,246,0.8), rgba(6,182,212,0.6));
-        }
-        .grid-bg {
-            background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
-            background-size: 32px 32px;
+        #loading-screen {
+            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
         }
     </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden selection:bg-brand-purple selection:text-white">
+<body class="selection:bg-white selection:text-black relative">
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-brand-bg/80 border-b border-brand-border/60">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-cyan flex items-center justify-center text-white font-display font-bold text-xl shadow-glow-purple">
-                    C
-                </div>
-                <span class="font-display font-extrabold text-xl tracking-wide text-white">CYRUS'<span class="text-brand-purple"> SERVER</span></span>
+    <!-- Loading Screen Overlay -->
+    <div id="loading-screen" class="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+            <span class="text-xs tracking-[0.3em] uppercase text-neutral-400 font-semibold animate-pulse">Loading Sanctuary...</span>
+        </div>
+    </div>
+
+    <!-- Interactive Cursor Light -->
+    <div id="cursor-glow"></div>
+
+    <!-- Floating Geometric Ambient Shapes -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-white/[0.04] rounded-full blur-[90px] animate-pulse-glow"></div>
+        <div class="absolute top-2/3 right-12 w-96 h-96 bg-white/[0.03] rounded-full blur-[110px] animate-pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/3 left-1/4 w-16 h-16 border border-white/10 rounded-xl animate-float-slow"></div>
+        <div class="absolute top-2/4 right-1/4 w-24 h-24 border border-white/5 rounded-2xl animate-float-fast"></div>
+        <div class="absolute bottom-1/4 left-1/5 w-12 h-12 border border-white/10 rounded-lg animate-float-slow" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Live Activity Marquee Ticker -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-cardbg border-b border-bordercol overflow-hidden whitespace-nowrap text-xs text-neutral-400 py-2">
+        <div class="inline-block animate-marquee">
+            <span class="mx-6">« A sanctuary for the unseen editor »</span> &bull;
+            <span class="mx-6">« Dedicated to the craft, not the clout »</span> &bull;
+            <span class="mx-6">« Curated forums & rare assets »</span> &bull;
+            <span class="mx-6">« Quality over noise »</span> &bull;
+            <span class="mx-6">« A sanctuary for the unseen editor »</span> &bull;
+            <span class="mx-6">« Dedicated to the craft, not the clout »</span> &bull;
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-9 left-0 right-0 z-40 backdrop-blur-xl bg-darkbg/80 border-b border-bordercol">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="text-lg font-black tracking-widest text-white flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 bg-white rounded-full animate-ping"></span>
+                CYRUS'
             </a>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
                 <a href="#features" class="hover:text-white transition-colors">Features</a>
-                <a href="#showcase" class="hover:text-white transition-colors">Showcase</a>
-                <a href="#stats" class="hover:text-white transition-colors">Community</a>
+                <a href="#architecture" class="hover:text-white transition-colors">Server Layout</a>
+                <a href="https://discord.gg/ZaSfp3mhh4" target="_blank" class="hover:text-white transition-colors">Community</a>
             </div>
-            <a href="https://discord.gg/5NAffh8eap" target="_blank" class="flex items-center gap-2 bg-brand-discord hover:bg-[#4752C4] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all transform hover:-translate-y-0.5 shadow-glow-discord">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 127.14 96.36">
-                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.91,53.87,53,48.8,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.91,96.1,53,91,65.69,84.69,65.69Z"/>
-                </svg>
-                <span>Join Server</span>
+            <a href="https://discord.gg/ZaSfp3mhh4" target="_blank" class="glow-button px-5 py-2.5 bg-white text-black font-semibold rounded-lg text-xs tracking-wider uppercase flex items-center gap-2">
+                <span>Join Community</span>
             </a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-36 pb-24 md:pt-48 md:pb-36 grid-bg overflow-hidden">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-purple/20 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-brand-cyan/20 rounded-full blur-[100px] pointer-events-none"></div>
+    <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 z-10">
+        <div data-aos="fade-down" data-aos-duration="1000" class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-bordercol bg-cardbg/80 mb-6 text-xs font-medium tracking-widest text-neutral-300 uppercase">
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            Rare Monochrome Editing Sanctuary
+        </div>
 
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/40 bg-brand-purple/10 text-brand-purple text-xs font-semibold tracking-wider uppercase mb-8">
-                <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-                The Ultimate Creator Network
+        <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150" class="text-6xl md:text-9xl font-black tracking-tighter mb-6 text-white bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-200 to-neutral-600">
+            Cyrus' Server
+        </h1>
+
+        <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" class="max-w-2xl text-neutral-400 text-lg md:text-xl font-light mb-12 leading-relaxed">
+            A high-end, low-key hub for creators. Delve into rare asset forums and exchange project files within an elite community.
+        </p>
+
+        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="450" class="flex flex-wrap gap-4 justify-center">
+            <a href="https://discord.gg/ZaSfp3mhh4" target="_blank" class="glow-button px-8 py-4 bg-white text-black font-extrabold rounded-xl text-sm tracking-wide flex items-center gap-3">
+                <span>Join Community Server</span>
+            </a>
+            <a href="#features" class="glow-button px-8 py-4 bg-cardbg border border-bordercol text-white font-semibold rounded-xl text-sm tracking-wide hover:bg-neutral-900">
+                Explore Hub
+            </a>
+        </div>
+    </header>
+
+    <!-- Core Features Grid -->
+    <section id="features" class="py-28 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white">Engineered For Perfection</h2>
+            <p class="text-neutral-400 max-w-lg mx-auto text-sm md:text-base">Meticulously organized forum channels and dedicated resource spaces.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-8 rounded-2xl relative">
+                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl mb-6">📁</div>
+                <h3 class="text-xl font-bold mb-3 text-white">Interactive Forum Hubs</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">Dedicated discussion forums for project files, transitions, effects, and audio sound assets where creators post cleanly.</p>
             </div>
-            <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-                Elevate Your Edits.<br/>
-                <span class="gradient-text">Connect. Create. Master.</span>
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
-                Join <strong class="text-white">Cyrus' Server</strong> — the premier community for video editors, VFX artists, and motion designers. Access free assets, get live feedback, and level up your skills.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://discord.gg/5NAffh8eap" target="_blank" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-brand-purple hover:bg-brand-purpleGlow text-white font-semibold px-8 py-4 rounded-xl shadow-glow-purple transition-all transform hover:-translate-y-1 text-base">
-                    <svg class="w-6 h-6 fill-current" viewBox="0 0 127.14 96.36">
-                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.91,53.87,53,48.8,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.91,96.1,53,91,65.69,84.69,65.69Z"/>
-                    </svg>
-                    <span>Join Cyrus' Server</span>
-                </a>
-                <a href="#features" class="w-full sm:w-auto border border-brand-border hover:border-brand-purple/60 text-gray-300 hover:text-white font-medium px-8 py-4 rounded-xl transition-all">
-                    Explore Features
-                </a>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-8 rounded-2xl relative">
+                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl mb-6">🛠️</div>
+                <h3 class="text-xl font-bold mb-3 text-white">Softwares & Freebies</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">Instantly access curated software downloads, presets, overlays, fonts, and community-shared packages.</p>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-8 rounded-2xl relative">
+                <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl mb-6">✨</div>
+                <h3 class="text-xl font-bold mb-3 text-white">Showcase & Critique</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">Display your latest edits at your own pace, build your portfolio, and collect constructive feedback when desired.</p>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-24 max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Everything You Need to Edit Like a Pro</h2>
-            <p class="text-gray-400">Whether you use After Effects, Premiere Pro, CapCut, or DaVinci Resolve, our community gives you the edge.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Card 1 -->
-            <div class="gradient-border p-8 transition-transform duration-300 hover:-translate-y-2">
-                <div class="w-12 h-12 bg-brand-purple/20 text-brand-purple rounded-xl flex items-center justify-center mb-6 text-2xl">
-                    ⚡
-                </div>
-                <h3 class="font-display text-xl font-bold text-white mb-3">Free Assets & Presets</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Exclusive access to overlays, SFX, color grades, project files, and transitions ready to drag and drop.</p>
+    <!-- Architecture Section -->
+    <section id="architecture" class="py-24 px-6 border-t border-bordercol bg-neutral-950/40 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">Server Architecture</h2>
+                <p class="text-neutral-400">A clean, noise-free layout structured for ultimate creative efficiency.</p>
             </div>
 
-            <!-- Card 2 -->
-            <div class="gradient-border p-8 transition-transform duration-300 hover:-translate-y-2">
-                <div class="w-12 h-12 bg-brand-cyan/20 text-brand-cyan rounded-xl flex items-center justify-center mb-6 text-2xl">
-                    💬
-                </div>
-                <h3 class="font-display text-xl font-bold text-white mb-3">Live Feedback</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Get constructive criticism and frame-by-frame critique from experienced creators to polish your work.</p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="gradient-border p-8 transition-transform duration-300 hover:-translate-y-2">
-                <div class="w-12 h-12 bg-brand-purple/20 text-brand-purple rounded-xl flex items-center justify-center mb-6 text-2xl">
-                    🏆
-                </div>
-                <h3 class="font-display text-xl font-bold text-white mb-3">Weekly Contests</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Participate in edit battles, weekly prompts, and community challenges with roles and prizes.</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="gradient-border p-8 transition-transform duration-300 hover:-translate-y-2">
-                <div class="w-12 h-12 bg-brand-cyan/20 text-brand-cyan rounded-xl flex items-center justify-center mb-6 text-2xl">
-                    🤝
-                </div>
-                <h3 class="font-display text-xl font-bold text-white mb-3">Collaborate & Hire</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Find client work, hire assistant editors, or collaborate with fellow video creators globally.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Showcase Section -->
-    <section id="showcase" class="py-20 bg-brand-card/40 border-y border-brand-border/40">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
-                <div class="w-full md:w-1/2">
-                    <span class="text-brand-cyan text-sm font-semibold uppercase tracking-wider">Community Spotlight</span>
-                    <h2 class="font-display text-3xl md:text-5xl font-bold text-white mt-2 mb-6 leading-tight">Crafted by editors, for editors.</h2>
-                    <p class="text-gray-400 mb-8 leading-relaxed">
-                        Step into an environment dedicated strictly to high-tier video production. From anime edits and gaming montages to commercial motion graphics, Cyrus' Server is where creativity thrives.
-                    </p>
-                    <ul class="space-y-4 mb-8 text-gray-300">
-                        <li class="flex items-center gap-3">
-                            <span class="text-brand-purple">✓</span> Active voice chats for live edit streaming
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="text-brand-purple">✓</span> Plugin support & troubleshooting channels
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="text-brand-purple">✓</span> Curated tutorials and learning roadmaps
-                        </li>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div data-aos="fade-right" class="glass-card p-8 rounded-2xl space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-3 border-b border-bordercol pb-4">
+                        <span>🌌</span> Information & Partnerships
+                    </h3>
+                    <ul class="space-y-3 text-sm text-neutral-400">
+                        <li class="flex items-center gap-3">🔲 <code>『📜』𝗿𝘂𝗹𝗲𝘀</code> &bull; Guidelines and safety protocols</li>
+                        <li class="flex items-center gap-3">🔲 <code>『📢』𝗮𝗻𝗻𝗼𝘂𝗻𝗰𝗲𝗺𝗲𝗻𝘁𝘀 & 𝘂𝗽𝗱𝗮𝘁𝗲𝘀</code> &bull; Official drops and news</li>
+                        <li class="flex items-center gap-3">🔲 <code>『🚀』𝗯𝗼𝗼𝘀𝘁𝘀</code> &bull; Perks for supporters</li>
+                        <li class="flex items-center gap-3">🔲 <code>『🤝』𝗽𝗮𝗿𝘁𝗻𝗲𝗿𝘀𝗵𝗶𝗽𝘀</code> &bull; Cross-network connections</li>
                     </ul>
-                    <a href="https://discord.gg/5NAffh8eap" target="_blank" class="inline-flex items-center gap-2 text-brand-purple hover:text-white font-semibold transition-colors">
-                        Join our Discord to see more →
-                    </a>
                 </div>
-                <div class="w-full md:w-1/2">
-                    <div class="relative gradient-border p-4 aspect-video flex items-center justify-center overflow-hidden group shadow-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-purple/20 to-brand-cyan/20 group-hover:scale-105 transition-transform duration-500"></div>
-                        <div class="relative z-10 text-center">
-                            <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-4 border border-white/20 shadow-glow-purple cursor-pointer group-hover:scale-110 transition-transform">
-                                <div class="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent ml-1"></div>
-                            </div>
-                            <p class="text-sm font-semibold text-gray-300">Community Showcase Reel</p>
-                        </div>
-                    </div>
+
+                <div data-aos="fade-left" class="glass-card p-8 rounded-2xl space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-3 border-b border-bordercol pb-4">
+                        <span>🎬</span> Editing Hub & Forums
+                    </h3>
+                    <ul class="space-y-3 text-sm text-neutral-400">
+                        <li class="flex items-center gap-3">🔲 <code>『📁』𝗽𝗿𝗼𝗷𝗲𝗰𝘁-𝗳𝗶𝗹𝗲𝘀 (Forum)</code> &bull; Study actual AE/Vegas setups</li>
+                        <li class="flex items-center gap-3">🔲 <code>『🔥』𝘁𝗿𝗮𝗻𝘀𝗶𝘁𝗶𝗼𝗻𝘀-𝗲𝗳𝗳𝗲𝗰𝘁𝘀 (Forum)</code> &bull; Advanced presets</li>
+                        <li class="flex items-center gap-3">🔲 <code>『🎵』𝗮𝘂𝗱𝗶𝗼-𝘀𝗼𝘂𝗻𝗱-𝗲𝗳𝗳𝗲𝗰𝘁𝘀 (Forum)</code> &bull; Clean audio clips</li>
+                        <li class="flex items-center gap-3">🔲 <code>『📥』𝗿𝗲𝗾𝘂𝗲𝘀𝘁𝘀 & 𝗲𝗱𝗶𝘁𝗶𝗻𝗴-𝗵𝗲𝗹𝗽</code> &bull; Request assets or help</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section id="stats" class="py-24 max-w-7xl mx-auto px-6 text-center">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="p-6">
-                <div class="font-display text-4xl md:text-5xl font-extrabold text-white mb-2">Active</div>
-                <div class="text-gray-400 text-sm">Community</div>
-            </div>
-            <div class="p-6">
-                <div class="font-display text-4xl md:text-5xl font-extrabold text-brand-purple mb-2">Free</div>
-                <div class="text-gray-400 text-sm">Presets & Assets</div>
-            </div>
-            <div class="p-6">
-                <div class="font-display text-4xl md:text-5xl font-extrabold text-brand-cyan mb-2">24/7</div>
-                <div class="text-gray-400 text-sm">Support & Chat</div>
-            </div>
-            <div class="p-6">
-                <div class="font-display text-4xl md:text-5xl font-extrabold text-white mb-2">100%</div>
-                <div class="text-gray-400 text-sm">Free to Join</div>
-            </div>
+    <!-- Call to Action Footer Section -->
+    <section class="py-28 px-6 text-center relative z-10 border-t border-bordercol">
+        <div class="max-w-3xl mx-auto" data-aos="zoom-in" data-aos-duration="800">
+            <h2 class="text-4xl md:text-5xl font-black mb-6 text-white tracking-tight">Step Into the Inner Circle</h2>
+            <p class="text-neutral-400 text-lg mb-10 font-light">Join Cyrus' Server right now to unlock all custom forums, project assets, and start sharing your edits.</p>
+            <a href="https://discord.gg/ZaSfp3mhh4" target="_blank" class="glow-button inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-extrabold rounded-2xl text-base tracking-wide shadow-2xl">
+                <span>Join https://discord.gg/ZaSfp3mhh4</span>
+            </a>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 max-w-5xl mx-auto px-6">
-        <div class="gradient-border p-12 text-center relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-purple/20 rounded-full blur-3xl"></div>
-            <div class="relative z-10">
-                <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">Ready to upgrade your editing game?</h2>
-                <p class="text-gray-400 max-w-xl mx-auto mb-8">Click below to get instant access to assets, feedback, and a community of passionate video editors.</p>
-                <a href="https://discord.gg/5NAffh8eap" target="_blank" class="inline-flex items-center gap-3 bg-brand-discord hover:bg-[#4752C4] text-white font-semibold px-10 py-4 rounded-xl shadow-glow-discord transition-all transform hover:-translate-y-1 text-lg">
-                    <span>Join Cyrus' Server Now</span>
-                </a>
+    <!-- Ambient Sound Toggle Widget (Bottom-Left Corner) -->
+    <div class="fixed bottom-6 left-6 z-40 flex items-center gap-3 glass-card px-4 py-2.5 rounded-full border border-white/10 shadow-2xl">
+        <button id="audio-toggle" onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer" title="Toggle Ambient Audio">
+            <svg id="play-icon" class="w-3.5 h-3.5 fill-current ml-0.5 hidden" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <div class="flex flex-col">
+            <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-semibold" id="audio-status">Now Playing</span>
+            <!-- Animated Soundwave Bars -->
+            <div id="soundwave" class="flex items-end gap-0.5 h-3 opacity-100 animate-pulse transition-opacity">
+                <span class="w-0.5 bg-white rounded-full h-2"></span>
+                <span class="w-0.5 bg-white rounded-full h-3"></span>
+                <span class="w-0.5 bg-white rounded-full h-1.5"></span>
+                <span class="w-0.5 bg-white rounded-full h-3"></span>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Hidden HTML5 Audio Element -->
+    <audio id="bg-audio" loop autoplay preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Footer -->
-    <footer class="border-t border-brand-border/60 py-12 text-center text-gray-500 text-sm">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-purple to-brand-cyan flex items-center justify-center text-white font-display font-bold text-xs">
-                    C
-                </div>
-                <span class="font-display font-bold text-gray-300">CYRUS' SERVER</span>
-            </div>
-            <p>© 2026 Cyrus' Server. All rights reserved. Not affiliated with Discord Inc.</p>
-            <div class="flex gap-6 text-gray-400">
-                <a href="https://discord.gg/5NAffh8eap" target="_blank" class="hover:text-white transition-colors">Discord Link</a>
-            </div>
-        </div>
+    <footer class="py-8 text-center text-xs text-neutral-600 border-t border-bordercol relative z-10 bg-darkbg">
+        <p>&copy; 2026 Cyrus' Server. All rights reserved. Designed for elite creators.</p>
     </footer>
 
+    <!-- Interactive Scripts -->
+    <script>
+        // Loading Screen & Auto Audio Handler
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.visibility = 'hidden';
+            }, 600);
+
+            // Attempt automatic playback
+            audio.play().then(() => {
+                isPlaying = true;
+            }).catch(e => {
+                console.log("Autoplay blocked by browser policy, user interaction required:", e);
+                isPlaying = false;
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                audioStatus.textContent = 'Ambient Lo-Fi';
+                soundwave.classList.remove('opacity-100', 'animate-pulse');
+                soundwave.classList.add('opacity-30');
+            });
+        });
+
+        // Cursor Follow Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // Ambient Audio Toggle
+        const audio = document.getElementById('bg-audio');
+        const audioToggle = document.getElementById('audio-toggle');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const audioStatus = document.getElementById('audio-status');
+        const soundwave = document.getElementById('soundwave');
+
+        let isPlaying = true;
+
+        function toggleAudio() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    audioStatus.textContent = 'Now Playing';
+                    soundwave.classList.remove('opacity-30');
+                    soundwave.classList.add('opacity-100', 'animate-pulse');
+                }).catch(e => {
+                    console.log("Audio playback failed:", e);
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                audioStatus.textContent = 'Ambient Lo-Fi';
+                soundwave.classList.remove('opacity-100', 'animate-pulse');
+                soundwave.classList.add('opacity-30');
+            }
+        }
+    </script>
+
+    <!-- AOS Script initialization -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 80,
+            duration: 800
+        });
+    </script>
 </body>
 </html>
